@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Notes</title>
+    <link rel="stylesheet" href="/static/css/header.css"/>
+    <link rel="stylesheet" href="/static/css/body.css"/>
+    <link rel="stylesheet" href="/static/css/notes_list.css"/>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <style>
+      * {
+        justify-content: center;
+        text-align: center;
+      }
+    </style>
+</head>
+<body>
+    <header>
+      <a href="notes" class="active"><div>notes</div></a>
+      <a href="editor"><div>editor</div></a>
+    </header>
+    <h1>Список файлов</h1>
+    <div class="notes_list">
+    {% for note_name, note_link in notes_list.items() %}
+      <div><a id="link" class="button_edit" href=editor?name={{ note_link }}>✎</a><a id="link" href=note?name={{ note_link }}>{{ note_name }}</a></div>
+    {% endfor %}
+    </div>
+</body>
+</html>

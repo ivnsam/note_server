@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editor</title>
+    <link rel="stylesheet" href="/static/css/header.css"/>
+    <link rel="stylesheet" href="/static/css/body.css"/>
+    <link rel="stylesheet" href="/static/css/editor.css"/>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+<body>
+    <header>
+      <a href="notes"><div>notes</div></a>
+      <a href="editor" class="active"><div>editor</div></a>
+    </header>
+    <h1>Editor</h1>
+    
+    <form class="editor">
+      <h2>note name: </h2>
+      <input class="note_name interactive_element" required value="{{ note_name }}">
+      <span>{{ extention }}</span>
+      <h2>note text: </h2>
+      <textarea class="note_text" contenteditable required>{{ note_text }}</textarea>
+      
+      <button class="button_save interactive_element" onclick=saveNote()>save</button>
+    </form>
+    
+    
+    <script>
+      let url = "{{ url_for('editor', _method='POST') }}";
+      let old_note_name = document.querySelector('.note_name').value.replace(/\n/g, " ");
+
+      function saveNote() {
+        let note_name = document.querySelector('.note_name').value.replace(/\n/g, " ");
+        let note_text = document.querySelector('.note_text').value;
+        // Send data only if note name and note text are filled
+        if ( (note_name.trim() !== '') && (note_text.trim() !== '') ) {
+          fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ old_note_name: old_note_name, note_name: note_name, note_text: note_text })
+          })
+          .then(response => {
+            let button_save = document.querySelector('.button_save');
+            if (response.status === 201) {
+              button_save.setAttribute("style", "background-color: green;");
+              button_save.innerHTML = "note was saved";
+              setTimeout(() => {
+                button_save.setAttribute("style", "background-color: yellow;");
+                button_save.innerHTML = "save";
+              }, 1500);
+            };
+            if (response.status === 500) {
+              button_save.setAttribute("style", "background-color: red;");
+              button_save.innerHTML = "note was not saved";
+              setTimeout(() => {
+                button_save.setAttribute("style", "background-color: yellow;");
+                button_save.innerHTML = "save";
+              }, 1500);
+            };
+            response.json()
+          })
+          .then(data => {
+            // Do something with the data
+            console.log(data);
+          })
+          .catch(error => {
+            // Handle errors
+            alert(error);
+          });
+          // Do not update page after sending data
+          event.preventDefault();
+        }
+      }
+      
+      document.addEventListener('keydown', event => {
+        if (event.ctrlKey && event.key === 's') {
+          // Handle the Ctrl+S shortcut
+          console.log('Ctrl+S pressed');
+          saveNote();
+          event.preventDefault();
+        }
+      });
+    </script>
+</body>
+</html>

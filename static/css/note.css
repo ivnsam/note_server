@@ -1,0 +1,13 @@
+.codehilite code, .codehilite pre {
+  padding: 6px 12px 6px 12px;
+  margin-bottom: 16px;
+}
+
+
+/* mobile */
+@media screen and (max-device-width: 480px) {
+  body {
+    width: 100vw;
+    flex-wrap: wrap;
+  }
+}

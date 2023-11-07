@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Статичная HTML страница</title>
+    <link rel="stylesheet" href="/static/css/header.css"/>
+    <link rel="stylesheet" href="/static/css/body.css"/>
+    <link rel="stylesheet" href="/static/css/note.css"/>
+    <link rel="stylesheet" href="/static/css/all_styles.css">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+<body class="default">
+    <header>
+      <a href="notes"><div>notes</div></a>
+      <a href="editor"><div>editor</div></a>
+    </header>
+    <!-- html code for theme select -->
+    <form>
+      <label for="themes_list">Select a theme:</label>
+      <select id="themes_list" name="themes_list" value="default">
+          {% for theme in themes_list %}
+          <option value="{{ theme }}"{% if theme=="default" %} selected{% endif %}>{{ theme }}</option>
+          {% endfor %}
+      </select>
+    </form>
+    
+    <!-- note content -->
+    <h1>{{ name|safe }}</h1>
+    <article>
+      <p>{{ content|safe }}</p>
+    </article>
+    
+    <!-- JavaScript-код для применения стиля -->
+    <script>
+      const select = document.getElementById('themes_list');
+      const body = document.querySelector('body');
+      
+      let preSelectedStyle = select.value;
+
+      select.addEventListener('change', function() {
+        selectedStyle = this.value;
+        body.classList.toggle(preSelectedStyle);
+        body.classList.toggle(selectedStyle);
+        preSelectedStyle = selectedStyle;
+      });
+    </script>
+</body>
+</html>

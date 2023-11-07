@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Статичная HTML страница</title>
+    <link rel="stylesheet" href="/static/css/header.css"/>
+    <link rel="stylesheet" href="/static/css/body.css"/>
+    <link rel="stylesheet" href="/static/css/home.css"/>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+<body>
+  <header>
+    <a href="home" class="active"><div>home</div></a>
+    <a href="notes"><div>notes</div></a>
+    <a href="editor"><div>editor</div></a>
+  </header>
+  <section>
+    <img src="{{ url_for('static', filename='mypic.jpg') }}">
+  </section>
+</body>
+</html>

@@ -1,0 +1,26 @@
+* {
+  text-decoration: none;
+}
+body {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 5vw 10vh 5vw;
+  background: lightgray;
+}
+h1 {
+  font-size: clamp(2rem, 3vmin, 6rem);
+  margin: 1vmin 1vmin 1vmin 1vmin;
+}
+
+
+/* mobile */
+@media screen and (max-device-width: 480px) {
+  body {
+    font-size: clamp(2rem, 2vmin, 6rem);
+  }
+  h1 {
+    font-size: clamp(2rem, 3vmax, 6rem);
+    margin: 1vmin 1vmin 1vmin 1vmin;
+  }
+}

@@ -1,0 +1,28 @@
+* {
+  justify-content: center;
+  text-align: center;
+}
+section {
+  display: flex;
+  align-items: flex-start;
+  align-content: flex-start;
+}
+img {
+  border-radius: 513px;
+  max-height: 45vh;
+  max-width: 45vw;
+  margin: 0vmin 1vmin 0vmin 1vmin;
+}
+
+
+/* mobile */
+@media screen and (max-device-width: 480px) {
+  section {
+    display: inline-flex;
+    align-items: center;
+    flex-direction: column-reverse;
+  }
+  img {
+    margin: 2vmax 0vmax 2vmax 0vmax;
+  }
+}

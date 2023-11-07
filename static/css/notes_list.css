@@ -1,0 +1,9 @@
+.notes_list .button_edit {
+  margin: .2rem;
+  color: #009d9d;
+}
+
+.notes_list .button_edit:hover {
+  cursor: pointer;
+  color: cyan;
+}

@@ -1,0 +1,31 @@
+header {
+  display: flex;
+  margin: 1rem 0rem 1rem 0rem;
+}
+header a {
+  background-color: #6affff;
+  padding: 0.3rem;
+  border: #009d9d solid 2px;
+  border-radius: 8px;
+  margin: 0rem 0.3rem 0rem 0.3rem;
+}
+header a:hover {
+  background-color: cyan;
+}
+a div {
+  font-size: clamp(1rem, 1.5vmin, 4rem);
+}
+.active {
+  background-color: #009d9d;
+  color: lightgray;
+}
+
+/* mobile */
+@media screen and (max-device-width: 480px) {
+  header a {
+    border-radius: 16px;
+  }
+  a div {
+    font-size: clamp(1rem, 3vmax, 6rem);
+  }
+}

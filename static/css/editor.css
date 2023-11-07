@@ -1,0 +1,37 @@
+.note_name {
+  border: solid black 1px;
+  border-radius: 10px;
+  padding: 0px 5px 0px 5px;
+  line-height: 1.5rem;
+  width: 35vw;
+  background-color: #eee;
+}
+.note_text {
+  border: solid black 1px;
+  border-radius: 10px;
+  padding: 0px 5px 0px 5px;
+  height: 70vh;
+  width: 35vw;
+  background-color: #eee;
+}
+.button_save {
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: center; */
+  background-color: #ffff98;
+}
+.button_save:hover {
+  background-color: yellow;
+  cursor: pointer;
+}
+
+
+/* mobile */
+@media screen and (max-device-width: 480px) {
+  .note_name {
+    width: 72vw;
+  }
+  .note_text {
+    width: 90vw;
+  }
+}

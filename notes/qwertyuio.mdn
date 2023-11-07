@@ -1,0 +1,98 @@
+fdgtujik8o
+
+```python
+import os
+from flask import send_from_directory
+from flask import send_file, make_response, jsonify
+from flask import Flask, render_template, request, abort
+import markdown
+import json
+
+
+app = Flask(__name__)
+notes = []
+notes_name_extention = ".mdn"
+notes_directory = "./notes/"
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def error500(e):
+    return "we haven`t save your note because of this error:" + e, 500
+
+
+@app.route('/', methods=['GET'])
+def index():
+    return render_template('index.html')
+
+@app.route('/home', methods=['GET'])
+def home():
+    return render_template('index.html')
+
+@app.route('/notes', methods=['GET'])
+def notes_list():
+    notes = []
+    files = os.listdir(notes_directory)
+    for file in files:
+        if file.endswith(notes_name_extention):
+            notes.append(file)
+    print(notes)
+    return render_template('notes_list.html', notes_list=notes)
+
+@app.route('/note', methods=['GET'])
+def note():
+    note_name = request.args.get('name')
+    theme_name = request.args.get('theme')
+    themes = os.listdir('./themes')
+    themes = [theme.split('.', 1)[0] for theme in themes]
+    print(notes_directory + note_name)
+    print(os.path.exists(notes_directory + note_name))
+    if os.path.exists(notes_directory + note_name):
+        with open(notes_directory + note_name, 'r') as f:
+            content = f.read()
+        html = markdown.markdown(content, extensions=['fenced_code', 'codehilite'])
+        html = render_template('note.html', themes_list=themes, theme=theme_name, name=note_name, content=html)
+        return html
+    else:
+        return abort(404)
+
+@app.route('/editor', methods=['GET', 'POST'])
+def editor():
+    if request.method == 'GET':
+        return render_template('editor.html', extention=notes_name_extention)
+    elif request.method == 'POST':
+        json_string = request.data
+        print(json_string)
+        json_data = json.loads(json_string)
+        note_name = json_data["note_name"] + notes_name_extention
+        note_text = json_data["note_text"]
+        try:
+            with open(notes_directory + note_name, 'w') as file:
+                file.write(note_text)
+        except Exception as e:
+            return abort(500)
+        return make_response( jsonify('{ "msg": "we have saved your note :)" }'), 201)
+
+
+def build_styles_file():
+    directory = './themes'
+
+    for filename in os.listdir(directory):
+        if filename.endswith(".css"):
+            file_path = os.path.join(directory, filename)
+            with open(file_path, 'r') as file:
+                lines = file.readlines()
+
+            new_class_filter = "." + filename.split('.', 1)[0] + " "
+            with open('./static/css/all_styles.css', 'a') as file:
+                for line in lines:
+                    file.write(new_class_filter + line)
+
+if __name__ == '__main__':
+    build_styles_file()
+    app.run()
+
+```
