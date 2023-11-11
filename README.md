@@ -1,8 +1,8 @@
 # note_server
 Web application for editing Markdown-based notes
 
-Themes for code highlighting are from https://github.com/develephant/mkdocs-codehilite-themes
-Writed with PerplexityAI by Ivan Samoylenko, 2023
+Themes for code highlighting are from https://github.com/develephant/mkdocs-codehilite-themes <br>
+Made with PerplexityAI by Ivan Samoylenko, 2023
 
 # how to run on localhost with demo notes
 Clone this repository and run serv.py
