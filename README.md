@@ -16,4 +16,4 @@ python3 serv.py -l
 -l or --local - listen localhost
 
 # To-Do:
-# 1. Optimize loading .css styles on note page
+1. Optimize loading .css styles on note page
