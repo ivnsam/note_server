@@ -9,6 +9,6 @@ python3 serv.py -l
 ```
 
 # command line arguments
--d or --notes_dir - path to directory with notes
--i or --ip IP - set listen address
+-d or --notes_dir - path to directory with notes <br>
+-i or --ip IP - set listen address <br>
 -l or --local - listen localhost
