@@ -6,10 +6,6 @@
 
 # Writed with PerplexityAI by Ivan Samoylenko, 2023
 
-# ---
-# To-Do:
-# 1. Optimize loading .css styles on note page
-
 import os
 from flask import send_from_directory
 from flask import send_file, make_response, jsonify
