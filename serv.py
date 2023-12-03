@@ -14,12 +14,15 @@ import markdown
 import json
 import argparse
 import urllib.parse
+import glob
+import mammoth
 
 
 app = Flask(__name__)
 notes = []
-notes_name_extention = ".mdn"
+notes_name_extentions = (".mdn", ".md", ".txt", ".docx")
 notes_directory = "./notes/"
+default_note_extention = ".mdn"
 
 
 @app.errorhandler(404)
@@ -28,7 +31,7 @@ def page_not_found(e):
 
 @app.errorhandler(500)
 def error500(e):
-    return "we haven`t save your note because of this error:" + e, 500
+    return "<h1>(・_・ヾ</h1><p>we haven`t save your note because of error below</p>" + e.description, 500
 
 @app.route('/', methods=['GET'])
 def index():
@@ -39,8 +42,8 @@ def notes_list():
     notes = {}
     files = os.listdir(notes_directory)
     for file in files:
-        if file.endswith(notes_name_extention):
-            notes[file.split('.',1)[0]] = urllib.parse.quote(file)
+        if file.endswith(notes_name_extentions):
+            notes[file] = urllib.parse.quote(file)
             
     # generate files list without extentions
     return render_template('notes_list.html', notes_list=notes)
@@ -53,9 +56,14 @@ def note():
     themes = [theme.split('.', 1)[0] for theme in themes]
     
     if os.path.exists(notes_directory + note_name):
-        with open(notes_directory + note_name, 'r') as f:
-            content = f.read()
-        html = markdown.markdown(content, extensions=['fenced_code', 'codehilite'])
+        if note_name.split('.', 1)[-1] == "docx" or note_name.split('.', 1)[-1] == "doc":
+            with open(notes_directory + note_name, "rb") as docx_file:
+                result = mammoth.convert_to_html(docx_file)
+            html = result.value
+        else:
+            with open(notes_directory + note_name, 'r') as f:
+                content = f.read()
+            html = markdown.markdown(content, extensions=['fenced_code', 'codehilite'])
         html = render_template('note.html', themes_list=themes, theme=theme_name, name=note_name, content=html)
         return html
     else:
@@ -76,13 +84,13 @@ def editor():
             else:
                 return abort(404)
 
-        return render_template('editor.html', extention=notes_name_extention, note_name=note_name, note_text=note_text)
+        return render_template('editor.html', extention=default_note_extention, note_name=note_name, note_text=note_text)
     elif request.method == 'POST':
         json_string = request.data
         json_data = json.loads(json_string)
         
-        old_note_name = json_data["old_note_name"] + notes_name_extention
-        note_name = json_data["note_name"] + notes_name_extention
+        old_note_name = json_data["old_note_name"] + default_note_extention
+        note_name = json_data["note_name"] + default_note_extention
         note_text = json_data["note_text"]
         try:
             with open(notes_directory + note_name, 'w') as file:

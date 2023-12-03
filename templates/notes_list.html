@@ -21,7 +21,7 @@
     <h1>Список файлов</h1>
     <div class="notes_list">
     {% for note_name, note_link in notes_list.items() %}
-      <div><a id="link" class="button_edit" href=editor?name={{ note_link }}>✎</a><a id="link" href=note?name={{ note_link }}>{{ note_name }}</a></div>
+      <div>{% if note_name.endswith('.mdn') %}<a id="link" class="button_edit" href=editor?name={{ note_link }}>✎</a>{% endif %}<a id="link" href=note?name={{ note_link }}>{{ note_name }}</a></div>
     {% endfor %}
     </div>
 </body>
