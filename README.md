@@ -5,8 +5,9 @@ Themes for code highlighting are from https://github.com/develephant/mkdocs-code
 Made with PerplexityAI by Ivan Samoylenko, 2023
 
 # how to run on localhost with demo notes
-Clone this repository and run serv.py
+Clone this repository, install requiments and run serv.py
 ```
+pip3 install -r requiments.txt
 python3 serv.py -l
 ```
 
